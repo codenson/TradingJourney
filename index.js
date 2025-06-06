@@ -2,30 +2,100 @@ import 'dotenv/config';
 import { GoogleGenAI } from "@google/genai";
 import fs from 'fs';
 import csv from 'csv-parser';
+// import connectDB from './config/db.js';
+import { connectDB, disconnectDB } from './config/db.js';
+import HistoricPropt from './models/mdSchema.js';
+
 
 const ai = new GoogleGenAI({ apiKey: process.env.Google_API_KEY });
-var phrase = "Write a one-sentence bedtime story about a unicorn.";
+var reply = "";
 
 async function main(phrase) {
-    const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: phrase,
-    });
-    console.log(response.text);
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: phrase,
+        });
+        reply = response.text;
+
+        //s console.log(response.text);
+        return response.text;
+    } catch (error) {
+        console.error("model is busy, try again later");
+    }
 }
 
-const results = [];
+var file = './Data/DayTraderBook.csv';
+var csvContent = "";
 
-fs.createReadStream('./Data/DayTraderBook.csv')
-    .pipe(csv())
-    .on('data', (data) => results.push(data))
-    .on('end', () => {
-        const jsonString = JSON.stringify(results);
-        console.log(jsonString); // Send this via API
+function parseCSV(file) {
+    return new Promise((resolve) => {
+        const results = [];
+        fs.createReadStream(file)
+            .pipe(csv())
+            .on('data', (data) => results.push(data))
+            .on('end', () => {
+                csvContent = JSON.stringify(results);
+                resolve(csvContent);
+            });
     });
-var prompt = "Analyze the following trading journey and " +
-    "give advice and suggestions for improvement and strategies to become profitable in trading: " + JSON.stringify(results);
+}
+await parseCSV('./Data/DayTraderBook.csv');
+//console.log(csvContent);
+
+
+var prompt = process.env.PROMPT_TEXT + csvContent;
+var text = await main(prompt);
+//console.log("Reply::::::::   ", text);
+
+function readJsonFile(filename) {
+    const content = fs.readFileSync(filename, "utf8");
+    var text = JSON.stringify(JSON.parse(content));
+    console.log("users" + text);
+    return text;
+
+}
+/**
+ * Funion to update the interactions memory file with new summaried text.
+ * @param {} text the current analyied report of trading activities based on the analysis performed by NLP bot */
+function updateInteractionsMemory(text) {
+    const content = {
+        "user": "name",
+        "memory": text
+    }
+    fs.writeFileSync("./Agentic_Memory/user.json", JSON.stringify(content, null, 2), "utf8");
+    //fs.writeFileSync("./Agentic_Memory/user.json", content, "utf8");
+    //console.log("updated");
+}
+
+
+var filename = "./Prompts/AgenticMemoryPrompt.json";
+var prompt = readJsonFile(filename).prompt + text;
+// console.log("Prompt::::::::   ", prompt);
+
+text = await main(prompt);
+console.log("Final Reply::::::::   ", text);
+
+
+updateInteractionsMemory(text);
+
+connectDB();
+
+
+const entry = new HistoricPropt({ name: 'Niko', memText: text });
+await entry.save();
+
+const allEntries = await HistoricPropt.find();
+
+console.log('All entries::::::::::::::::;', allEntries);
+
+const count = await HistoricPropt.countDocuments();
+console.log('Total documents:', count);
+
+disconnectDB();
 
 
 
-main(prompt);
+
+
+
