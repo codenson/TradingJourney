@@ -21,7 +21,7 @@
 
 // import { GoogleGenAI } from "@google/genai";
 
-// const ai = new GoogleGenAI({ apiKey: "AIzaSyCDN_OSoOM5hk7_q5WIYFIB26GyYAAmO4o" });
+// const ai = new GoogleGenAI({ apiKey: ApiKey" });
 
 // async function main() {
 //     const response = await ai.models.generateContent({
