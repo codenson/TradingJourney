@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 const sumMemSchema = new mongoose.Schema({
     name: String,
+    id: Number,
     memText: String,
     createdAt: { type: Date, default: Date.now }
 });
