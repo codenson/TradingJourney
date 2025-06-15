@@ -1,0 +1,11 @@
+CREATE DATABASE cuserCredentialsDB; 
+
+CREATE TABLE users (
+  email VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  recovery_code VARCHAR(100) UNIQUE, -- must be unique
+  recovery_expires TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

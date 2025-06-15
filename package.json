@@ -1,32 +1,26 @@
 {
-  "dependencies": {
-    "@google/genai": "^1.4.0",
-    "@google/generative-ai": "^0.24.1",
-    "ai": "file:",
-    "csv-parser": "^3.2.0",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "mongoose": "^8.15.1",
-    "nodemon": "^3.1.10",
-    "openai": "^5.1.0"
-  },
-  "name": "ai",
+  "name": "newaitrader",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install:all": "npm --prefix BackEnd install && npm --prefix FrontEnd install",
+     "dev": "concurrently \"npm --prefix BackEnd run dev\" \"npm --prefix FrontEnd/client run dev\"",
+    "build": "npm --prefix BackEnd run build && npm --prefix FrontEnd run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "## Project Overview This project is designed to help day traders who are struggling to achieve consistent profits by combining journaling with advanced AI analysis. By leveraging smart, engineered prompting techniques, the system assists traders in reflecting on their trading strategies and uncovering what works and what doesn’t.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codenson/TradingJourney.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/codenson/TradingJourney/issues"
   },
-  "homepage": "https://github.com/codenson/TradingJourney#readme"
+  "homepage": "https://github.com/codenson/TradingJourney#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }
