@@ -1,0 +1,29 @@
+{
+  "name": "newaitrader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix BackEnd install && npm --prefix FrontEnd install",
+    "dev": "concurrently \"npm --prefix BackEnd run dev\" \"npm --prefix FrontEnd/client run dev\"",
+    "build": "npm --prefix BackEnd run build && npm --prefix FrontEnd run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codenson/TradingJourney.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codenson/TradingJourney/issues"
+  },
+  "homepage": "https://github.com/codenson/TradingJourney#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "node-cron": "^4.1.0"
+  }
+}

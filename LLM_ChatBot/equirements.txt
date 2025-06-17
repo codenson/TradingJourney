@@ -1,0 +1,6 @@
+transformers
+torch
+huggingface_hub
+flask
+flask_cors
+python-dotenv

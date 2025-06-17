@@ -1,0 +1,33 @@
+node_modules
+node_modules/
+.env
+.DS_Store
+.vscode/
+LLM_ChatBot/hf-env/
+
+
+# Virtual environments
+LLM_ChatBot/hf-env/
+venv/
+env/
+.env
+*.env
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# Machine learning model files
+*.bin
+*.safetensors
+*.onnx
+*.pb
+
+# Large data files
+*.h5
+*.hdf5
+*.parquet
