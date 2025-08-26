@@ -14,30 +14,52 @@ import { AWS_RDS_db } from './MySQL_AWS_Aurora.js';
 import nodemailer from 'nodemailer';
 import { writeEntry, getEntries } from './dynamoDB.js';
 import cron from 'node-cron';
-
-
-
-
-
+import axios from 'axios';
+import session from 'express-session';
 
 const app = express();
 const port = 3000;
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // 
+    credentials: true                // ✅ Allow cookies to be sent
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// app.use(cookieParser());
+
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,        //
+
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false, // true if using HTTPS
+            sameSite: 'lax',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        }
+    })
+);
+
+app.get('/test-session', (req, res) => {
+    req.session.test = 'hello';
+    res.json({ session: req.session });
+});
+
 const table = process.env.DB_TABLE;
-const currUser = "";
 
 
-function setCurrUser(email) {
-    currUser = email;
-}
-
+app.get('/whoami', (req, res) => {
+    res.json({ email: req.session.email });
+});
 
 app.post('/login', async (req, res) => {
+    console.log("Login request received");
 
-    const { email, password } = req.body;
-    // currUser = email;
+    const { email, password, rememberMe } = req.body;
+
     try {
         const [result] = await AWS_RDS_db.query(
             'SELECT password FROM users  WHERE email = ? ',
@@ -47,8 +69,17 @@ app.post('/login', async (req, res) => {
             const storedHashedPassword = result[0].password;
             const isMatch = await bcrypt.compare(password, storedHashedPassword);
             if (isMatch) {
+
+                console.log("Password match successful");
+                req.session.email = email;
+                if (rememberMe) {
+                    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
+                } else {
+                    req.session.cookie.expires = false;
+
+                }
                 res.status(200).json({ message: 'Login successful' });
-                setCurrUser(email);
+
             }
             else if (!isMatch) {
                 res.status(500).json({ error: 'Invalid email or password' });
@@ -62,9 +93,17 @@ app.post('/login', async (req, res) => {
         res.status(404).json({ error: 'Network error' });
     }
 
-
-
 })
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).json({ error: 'Failed to log out' });
+        }
+        res.status(200).json({ message: 'Logged out successfully' });
+    });
+});
+
 app.post('/signup', async (req, res) => {
     console.log('Request body:', req.body); // Debug log
 
@@ -90,6 +129,7 @@ app.post('/signup', async (req, res) => {
                 'INSERT INTO users  (name, email, password) VALUES (?, ?, ?)',
                 [name, email, hashedPassword]
             );
+            req.session.email = email;
 
             res.status(200).json({ message: 'User added', insertId: result.insertId });
         } catch (err) {
@@ -178,10 +218,18 @@ function createUsreCrednetials(email, password) {
 }
 
 
+/***
+   * Endpoint to handle trade journaling data submission.
+    * It receives the trade data from the client, processes it, and saves it to DynamoDB.
+ */
 app.post('/TradeJournaling', async (req, res) => {
+    const email = req.session.email; // Use the session email
+    if (!email) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
 
     console.log("***************************Received Trade Journaling data:");
-    console.log("***************************Received Trade Journaling data Data:", req.body);
+    // console.log("***************************Received Trade Journaling data Data:", req.body);
     const {
         // email: currUser,
         Ticker,
@@ -195,7 +243,7 @@ app.post('/TradeJournaling', async (req, res) => {
         ChoppyDay
     } = req.body;
     // const email = "test@gmail.com";
-    const email = currUser;
+    // const email = req.session.email;
 
     const entry = {
         email,
@@ -221,9 +269,73 @@ app.post('/TradeJournaling', async (req, res) => {
     }
     // res.status(200).json({ message: "Entry saved successfully!" });
 });
+// app.post('/TradeJournalingHistory', async (req, res) => {SingleFileUploader
+
+
+app.get('/TradingAnalysis', async (req, res) => {
+    console.log("*************************** Received Trading Analysis request" + req.session.email);
+    // console.log("Session data:", req.session);
+
+    const userText = await getEntries(req.session.email);
+    console.log("userData:::::: ", userText);
+
+
+    // const file = './Data/DayTraderBook.csv';
+    // csvContent = await parseCSV(file); // assuming this sets global csvContent
+    // const userText = csvContent;
+
+    try {
+        const response = await axios.post(
+            'http://127.0.0.1:5000/AnalyseCSV',
+            { data: userText },
+            {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        console.log('Response:', response.data);
+        res.status(200).json({ message: response.data });
+
+    } catch (error) {
+        console.error('Error fetching data from Flask:', error.message);
+        res.status(500).json({ error: "Failed to retrieve analysis." });
+    }
+});
+// }
+// app.get('/TradingAnalysis', async (req, res) => {
+//     console.log("***************************Received Trading Analysis request");
+//     var file = './Data/DayTraderBook.csv';
+//     await parseCSV(file);
+//     var userText = csvContent;
+//     // await parseCSV(file);
+
+//     await axios.get('http://127.0.0.1:5000/AnalyseCSV',
+
+//         {
+//             data: userText // <-- wrap your data here
+//         },
+//         {
+//             headers: {
+//                 "Content-Type": "application/json" // <-- this line is critical
+//             }
+//         }
+
+//     ).then(response => {
+//         console.log('Response:', response.data);
+//         res.status(200).json({ message: response.data });
+//     }).catch(error => {
+//         console.error('Error fetching data:');
+//     });
+
+//     // res.status(200).json({ message: "Trading Analysis endpoint is working" });
+
+// });
 
 // cron.schedule('15 9 * * *', async () => {
-cron.schedule('0 * * * *', async () => {
+cron.schedule('* * * * *', async () => {
+    // cron.schedule('* * * * *', async () => {
     try {
         const prompt = process.env.PREMARKET_PROMPT; // Get prompt from environment
         var text = await main(prompt);        // Generate AI response
@@ -240,15 +352,15 @@ cron.schedule('0 * * * *', async () => {
 });
 
 /**
- * Endpoint to get the pre-market analysis data.
- */
+ * Endpoint to get the pre-market analysis data. It fetches market sentiment data from a txt file. 
+ * Market sentiments data was fetched using LLMs facing the internet and was saved to this this txt file to be avialable. 
+ * */
 app.get('/PreMarketAnalysis', async (req, res) => {
     const PreMarketAnalysis = await fs.readFileSync('./Data/PreMarketAnalysis.txt', 'utf8'); // Read the file
     res.status(200).json({ PreMarketAnalysis });
 });
 
 const ai = new GoogleGenAI({ apiKey: process.env.Google_API_KEY });
-// var reply = "";
 /**
  * Function to generate the response from the Google GenAI model.
  * @param {*} phrase  the input phrase to be processed by the AI model
@@ -270,31 +382,32 @@ async function main(phrase) {
 }
 
 // var file = './Data/DayTraderBook.csv';
-// var csvContent = "";
-// /**
-//  * Function to pasrse the CSV file and convert it to JSON format.
-//  * @param {} file  the path to the CSV file
-//  * @returns   {Promise} a promise that resolves to the JSON content of the CSV file
-//  */
-// function parseCSV(file) {
-//     return new Promise((resolve) => {
-//         const results = [];
-//         fs.createReadStream(file)
-//             .pipe(csv())
-//             .on('data', (data) => results.push(data))
-//             .on('end', () => {
-//                 csvContent = JSON.stringify(results);
-//                 resolve(csvContent);
-//             });
-//     });
-// }
+var csvContent = "";
+/**
+ * Function to pasrse the CSV file and convert it to JSON format.
+ * @param {} file  the path to the CSV file
+ * @returns   {Promise} a promise that resolves to the JSON content of the CSV file
+ */
+function parseCSV(file) {
+    return new Promise((resolve) => {
+        const results = [];
+        fs.createReadStream(file)
+            .pipe(csv())
+            .on('data', (data) => results.push(data))
+            .on('end', () => {
+                csvContent = JSON.stringify(results);
+                resolve(csvContent);
+            });
+
+    });
+}
 // await parseCSV('./Data/DayTraderBook.csv');
 // //console.log(csvContent);
 
 
-// var prompt = process.env.PROMPT_TEXT + csvContent;
-// var text = await main(prompt);
-// //console.log("Reply::::::::   ", text);
+var prompt = process.env.PROMPT_TEXT + csvContent;
+var text = await main(prompt);
+console.log("Reply::::::::   ", text);
 
 // function readJsonFile(filename) {
 //     const content = fs.readFileSync(filename, "utf8");

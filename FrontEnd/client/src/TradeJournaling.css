@@ -1,0 +1,475 @@
+/* style for TradeJournaling. */
+/* Container  */
+
+.trade-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trade-wrapper {
+  max-width: 1100px;
+  width: 100%;
+  background: #ffffffcc;
+  border-radius: 1.5rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* Header */
+.trade-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.trade-header-icon {
+  padding: 1rem;
+  background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+  border-radius: 50%;
+  display: inline-flex;
+  box-shadow: 0 8px 20px rgba(96, 165, 250, 0.35);
+  margin-bottom: 1rem;
+}
+
+.trade-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0.5rem 0;
+}
+
+.trade-subtitle {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Sections */
+.trade-section {
+  margin-bottom: 2.5rem;
+}
+
+.trade-section-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 0.75rem;
+}
+
+/* Grid Layout */
+.grid-3,
+.grid-2 {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Form Fields */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper label {
+  color: #475569;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.input-field,
+.select-field,
+.textarea-field {
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 1rem;
+  font-size: 1rem;
+  background: #f8fafc;
+  color: #334155;
+  transition: 0.2s ease;
+}
+
+.input-field:focus,
+.select-field:focus,
+.textarea-field:focus {
+  outline: none;
+  border-color: #60a5fa;
+  background: #ffffff;
+}
+
+.textarea-field {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.profit-indicator.gain {
+  background: #ecfdf5;
+  color: #10b981;
+  border: 1px solid #a7f3d0;
+}
+
+.profit-indicator.loss {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Button */
+.submit-button {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border: none;
+  color: white;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.trade-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .trade-title {
+    font-size: 2rem;
+  }
+
+  .trade-wrapper {
+    padding: 1.5rem;
+  }
+}
+
+/* Container styling for TradesHistoryActivityAnalysis. and TradeJournaling. */
+.upload-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #f9fbfc;
+  border-radius: 20px;
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Section block */
+.upload-section {
+  margin-top: 20px;
+}
+
+/* Headings */
+.upload-container h2 {
+  font-size: 1.6rem;
+  color: #1e293b;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.upload-container h3 {
+  font-size: 1.2rem;
+  color: #334155;
+  margin-top: 20px;
+}
+
+/* Paragraphs */
+.upload-container p {
+  color: #475569;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Input fields */
+.upload-input {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  margin: 16px 0;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #0f172a;
+  transition: 0.3s ease;
+}
+
+.upload-input:hover,
+.upload-input:focus {
+  border-color: #60a5fa;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+}
+
+.upload-input[type="file"] {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Buttons */
+.upload-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+}
+
+.upload-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.35);
+}
+
+/* Output section */
+.upload-output {
+  margin-top: 40px;
+  padding: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+/* Pre-Market Analysis container */
+.pre-market-analysis {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fdfefe;
+  border-radius: 20px;
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+  color: #1e293b;
+}
+
+/* Headings */
+.pre-market-analysis h2 {
+  font-size: 1.7rem;
+  color: #1e3a8a;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Text */
+.pre-market-analysis p {
+  color: #475569;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Output block */
+.analysis-output {
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-family: "Courier New", monospace;
+  white-space: pre-wrap;
+  margin-top: 20px;
+}
+
+/* Status and Error Messages */
+.status-message {
+  color: #64748b;
+  text-align: center;
+}
+
+.error-message {
+  color: #dc2626;
+  font-weight: 500;
+  text-align: center;
+  margin: 16px 0;
+}
+
+/* for Signup and Login */
+/* For login and signup pages */
+.login-container,
+.signup-container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-card {
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Link text */
+.text-link {
+  text-decoration: none;
+  color: #3b82f6;
+}
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/* Social icons */
+.icon-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+/* Header layout */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #edf2f8;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #d1d5db;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.75rem;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #3b82f6;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.logout-link {
+  color: #ef4444;
+}
+
+.logout-link:hover {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+body {
+  width: 100%;
+}
+
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #edf2f7, #dfeaf5);
+  padding: 20px;
+}
+
+.signup-form {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #333;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #f9f9f9;
+  transition: border 0.3s;
+}
+
+.signup-form input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.checkbox-label input {
+  margin-right: 10px;
+}
+
+.signup-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-form button:hover {
+  background-color: #3a7bd5;
+}

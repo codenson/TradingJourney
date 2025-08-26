@@ -13,7 +13,7 @@ function DashBoard() {
         <Link to="/PreMarketAnalysis">
           <Button text="Pre Market Analysis" className="dash_button" />
         </Link>
-        <Link to="/TradingActityAnalysis">
+        <Link to="/TradesHistoryActivityAnalysis">
           <Button text="Trades Activity Analysis" className="dash_button" />
         </Link>
       </div>

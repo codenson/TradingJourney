@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./BackEnd # <-- match your actual folder name
+    ports:
+      - "5000:5000"
+    depends_on:
+      - llm
+
+  frontend:
+    build: ./FrontEnd
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  llm:
+    build: ./LLM_ChatBot
+    ports:
+      - "8000:8000"
