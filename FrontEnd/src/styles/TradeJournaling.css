@@ -1,0 +1,580 @@
+/* Modern Trade Journaling Styles */
+.modern-trade-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  padding: 100px 20px 40px;
+  overflow-x: hidden;
+}
+
+/* Animated Background */
+.trade-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.floating-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float-particle 15s infinite linear;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 60%;
+  left: 80%;
+  animation-delay: 3s;
+}
+
+.particle-3 {
+  top: 30%;
+  left: 60%;
+  animation-delay: 6s;
+}
+
+.particle-4 {
+  top: 80%;
+  left: 20%;
+  animation-delay: 9s;
+}
+
+.particle-5 {
+  top: 50%;
+  left: 40%;
+  animation-delay: 12s;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    transform: translateY(-100vh) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Main Wrapper */
+.modern-trade-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 102, 0, 0.2);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* Modern Header */
+.modern-trade-header {
+  position: relative;
+  text-align: center;
+  padding: 50px 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 102, 0, 0.1),
+    rgba(255, 102, 0, 0.05)
+  );
+  border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.header-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-color),
+    transparent
+  );
+}
+
+.trade-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary-color), #e55500);
+  border-radius: 50%;
+  color: white;
+  margin-bottom: 25px;
+  animation: pulse-glow 3s infinite ease-in-out;
+  box-shadow: 0 0 30px rgba(255, 102, 0, 0.4);
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(255, 102, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(255, 102, 0, 0.6);
+  }
+}
+
+.modern-trade-title {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 15px 0;
+  text-shadow: 0 0 30px rgba(255, 102, 0, 0.3);
+  letter-spacing: -1px;
+}
+
+.modern-trade-subtitle {
+  font-size: 18px;
+  color: #ccc;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Form Styles */
+.modern-trade-form {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* Section Styles */
+.modern-trade-section {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.modern-trade-section:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 102, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.section-header h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+}
+
+.section-header svg {
+  color: var(--primary-color);
+  filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.5));
+}
+
+/* Grid Layouts */
+.form-grid {
+  display: grid;
+  gap: 25px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Input Styles */
+.modern-input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modern-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.modern-label svg {
+  color: var(--primary-color);
+}
+
+.modern-trade-input,
+.modern-select-field {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: var(--text-color);
+  font-size: 16px;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+}
+
+.modern-trade-input::placeholder {
+  color: rgba(245, 245, 245, 0.4);
+}
+
+.modern-trade-input:focus,
+.modern-select-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: rgba(255, 102, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.modern-select-field {
+  cursor: pointer;
+}
+
+.modern-select-field option {
+  background: #1a1a1a;
+  color: var(--text-color);
+  padding: 10px;
+}
+
+/* Textarea Styles */
+.modern-textarea-field {
+  width: 100%;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: var(--text-color);
+  font-size: 16px;
+  font-family: var(--font-body);
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.modern-textarea-field::placeholder {
+  color: rgba(245, 245, 245, 0.4);
+}
+
+.modern-textarea-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: rgba(255, 102, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Input Glow Effect */
+.input-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 102, 0, 0.1),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.modern-input-wrapper:hover .input-glow {
+  opacity: 1;
+}
+
+/* Profit Indicator */
+.modern-profit-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 25px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.modern-profit-indicator.gain {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.2),
+    rgba(34, 197, 94, 0.1)
+  );
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.modern-profit-indicator.loss {
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.2),
+    rgba(239, 68, 68, 0.1)
+  );
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.profit-label {
+  color: #ccc;
+}
+
+.profit-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Submit Section */
+.submit-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.modern-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 50px;
+  background: linear-gradient(135deg, var(--primary-color), #e55500);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+.modern-submit-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.modern-submit-button:hover::before {
+  left: 100%;
+}
+
+.modern-submit-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 102, 0, 0.4);
+}
+
+.modern-submit-button:active {
+  transform: translateY(-1px);
+}
+
+.modern-submit-button.submitting {
+  pointer-events: none;
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.submit-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer */
+.modern-trade-footer {
+  padding: 30px 40px;
+  background: rgba(255, 102, 0, 0.05);
+  border-top: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.footer-content span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.footer-content span:hover {
+  background: rgba(255, 102, 0, 0.1);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-trade-container {
+    padding: 90px 15px 30px;
+  }
+
+  .modern-trade-wrapper {
+    border-radius: 20px;
+  }
+
+  .modern-trade-header {
+    padding: 40px 25px;
+  }
+
+  .modern-trade-title {
+    font-size: 32px;
+  }
+
+  .modern-trade-form {
+    padding: 30px 25px;
+    gap: 25px;
+  }
+
+  .modern-trade-section {
+    padding: 20px;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .footer-content span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-trade-header {
+    padding: 30px 20px;
+  }
+
+  .modern-trade-title {
+    font-size: 28px;
+  }
+
+  .modern-trade-subtitle {
+    font-size: 16px;
+  }
+
+  .trade-header-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+
+  .modern-trade-form {
+    padding: 25px 20px;
+  }
+
+  .modern-trade-section {
+    padding: 18px;
+  }
+
+  .modern-trade-input,
+  .modern-select-field,
+  .modern-textarea-field {
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+
+  .modern-submit-button {
+    padding: 18px 40px;
+    font-size: 16px;
+  }
+}

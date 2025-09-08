@@ -1,0 +1,120 @@
+:root {
+  --primary-color: #ff6600;
+  --secondary-color: #1a1a1a;
+  --text-color: #f5f5f5;
+  --bg-color: #121212;
+  --shadow-color: rgba(255, 102, 0, 0.6);
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Roboto", sans-serif;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Wrapper: fullscreen center */
+.dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #1a1a1a, #242424);
+}
+
+/* Card container */
+.dashboard-card {
+  background-color: #1c1c1c;
+  padding: 60px 50px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px var(--shadow-color);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Headers */
+.dashboard-card h1 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  color: var(--text-color);
+  text-shadow: 0 0 10px var(--shadow-color);
+}
+
+.dashboard-card h2 {
+  font-size: 20px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Buttons container */
+.dashboard-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Button links */
+.dash-link {
+  display: block;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border-radius: 50px;
+  box-shadow: 0 6px 15px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.dash-link:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px var(--shadow-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-card {
+    padding: 40px 30px;
+  }
+  .dashboard-card h1 {
+    font-size: 28px;
+  }
+  .dashboard-card h2 {
+    font-size: 18px;
+  }
+  .dash-link {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-card {
+    padding: 30px 20px;
+  }
+  .dashboard-card h1 {
+    font-size: 24px;
+  }
+  .dashboard-card h2 {
+    font-size: 16px;
+  }
+  .dash-link {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

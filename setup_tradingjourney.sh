@@ -1,52 +1,75 @@
 #!/bin/bash
 set -e
 
-# === 1. Update system ===
-sudo yum update -y
+echo "=== Updating system ==="
+sudo dnf update -y
 
-# === 2. Install Node.js 22.x and npm ===
+# === Install Node.js 22.x and git ===
+echo "=== Installing Node.js and git ==="
 curl -fsSL https://rpm.nodesource.com/setup_22.x | sudo bash -
-sudo yum install -y nodejs git
+sudo dnf install -y nodejs git
 
-# === 3. Install Nginx ===
-sudo amazon-linux-extras enable nginx1
-sudo yum install -y nginx
+# === Install Nginx ===
+echo "=== Installing Nginx ==="
+sudo dnf install -y nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
 
-# === 4. Clone your public repo ===
+# === Clone your public repo ===
 cd ~
-if [ ! -d TradingJourney ]; then
-    git clone https://github.com/codenson/TradingJourney.git
+if [ -d TradingJourney ]; then
+    echo "=== Removing old TradingJourney repo ==="
+    rm -rf TradingJourney
 fi
 
+echo "=== Cloning TradingJourney repo ==="
+git clone https://github.com/codenson/TradingJourney.git
 cd TradingJourney
 
-# === 5. Backend setup ===
+# === Backend setup ===
+echo "=== Setting up Backend ==="
 cd BackEnd
 npm install
 cd ..
 
-# === 6. Frontend setup ===
+# === Frontend setup ===
+echo "=== Setting up Frontend ==="
 cd FrontEnd/client
-npm install
+npm install --legacy-peer-deps
 
-# Update vite.config.js to allow access from EC2 public DNS
+# Update vite.config.js safely to merge server config
 VITE_CONFIG="vite.config.js"
-if ! grep -q "server: {" $VITE_CONFIG; then
-    echo "Updating vite.config.js for host access"
-    cat >> $VITE_CONFIG <<EOL
+if grep -q "defineConfig(" $VITE_CONFIG; then
+    echo "=== Updating vite.config.js server configuration ==="
+    # Check if server already exists
+    if ! grep -q "server:" $VITE_CONFIG; then
+        sed -i '/export default defineConfig({/a\
+  server: {\
+    host: true,\
+    port: 5173,\
+    allowedHosts: ["*"]\
+  },' $VITE_CONFIG
+    fi
+else
+    # If defineConfig not found, create minimal config
+    cat > $VITE_CONFIG <<EOL
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-server: {
-  host: true,
-  port: 5173,
-  allowedHosts: ['*']
-}
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: true,
+    port: 5173,
+    allowedHosts: ["*"]
+  }
+})
 EOL
 fi
 cd ../../..
 
-# === 7. Nginx configuration ===
+# === Nginx configuration ===
+echo "=== Configuring Nginx ==="
 sudo tee /etc/nginx/conf.d/tradingjourney.conf > /dev/null <<EOL
 server {
     listen 80;
@@ -76,6 +99,7 @@ EOL
 sudo nginx -t
 sudo systemctl restart nginx
 
-# === 8. Run backend and frontend ===
+# === Run backend and frontend ===
+echo "=== Starting Backend & Frontend ==="
 cd ~/TradingJourney
 npx concurrently "npm --prefix BackEnd run dev" "npm --prefix FrontEnd/client run dev"

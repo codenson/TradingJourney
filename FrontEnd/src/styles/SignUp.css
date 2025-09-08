@@ -1,0 +1,327 @@
+:root {
+  --primary-color: #ff6600;
+  --secondary-color: #1a1a1a;
+  --text-color: #f5f5f5;
+  --bg-color: #121212;
+  --shadow-color: rgba(255, 102, 0, 0.6);
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Roboto", sans-serif;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Wrapper: fullscreen center */
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #1a1a1a, #242424);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Form container */
+.signup-form {
+  background-color: #1c1c1c;
+  padding: 60px 50px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px var(--shadow-color);
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  animation: slideInUp 0.8s ease-out;
+}
+
+/* Form header */
+.signup-form h2 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  color: var(--text-color);
+  text-shadow: 0 0 10px var(--shadow-color);
+  text-align: center;
+  margin: 0 0 20px 0;
+  animation: fadeInGlow 1.2s ease-out;
+}
+
+/* Input wrapper for glow effect */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* Input glow background */
+.input-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, var(--primary-color), #ff8833);
+  border-radius: 50px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Input fields */
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  position: relative;
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-family: var(--font-body);
+  background-color: #2a2a2a;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  color: var(--text-color);
+  outline: none;
+  transition: all 0.4s ease;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.signup-form input[type="text"]::placeholder,
+.signup-form input[type="email"]::placeholder,
+.signup-form input[type="password"]::placeholder {
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+/* Input focus effects */
+.signup-form input[type="text"]:focus,
+.signup-form input[type="email"]:focus,
+.signup-form input[type="password"]:focus {
+  border-color: var(--primary-color);
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 102, 0, 0.3);
+}
+
+.signup-form input[type="text"]:focus::placeholder,
+.signup-form input[type="email"]:focus::placeholder,
+.signup-form input[type="password"]:focus::placeholder {
+  color: #bbb;
+}
+
+.input-wrapper:hover .input-glow {
+  opacity: 0.1;
+}
+
+.signup-form input:focus + .input-glow {
+  opacity: 0.2;
+}
+
+/* Checkbox styling */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #ccc;
+  cursor: pointer;
+  user-select: none;
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.checkbox-label:hover {
+  color: var(--text-color);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:hover {
+  transform: scale(1.3);
+}
+
+/* Submit button */
+.signup-form button {
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  background: linear-gradient(45deg, var(--primary-color), #ff8833);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 15px;
+  box-shadow: 0 6px 15px var(--shadow-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-form button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.signup-form button:hover {
+  background: linear-gradient(45deg, #ff8833, var(--primary-color));
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px var(--shadow-color);
+}
+
+.signup-form button:hover::before {
+  left: 100%;
+}
+
+.signup-form button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px var(--shadow-color);
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInGlow {
+  from {
+    opacity: 0;
+    text-shadow: 0 0 0 var(--shadow-color);
+  }
+  to {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--shadow-color);
+  }
+}
+
+/* Input animation on load */
+.input-wrapper {
+  animation: fadeInSlide 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.input-wrapper:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.input-wrapper:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.input-wrapper:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.input-wrapper:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.checkbox-label {
+  animation: fadeInSlide 0.6s ease-out forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+.signup-form button {
+  animation: fadeInSlide 0.6s ease-out forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-form {
+    padding: 40px 30px;
+  }
+
+  .signup-form h2 {
+    font-size: 28px;
+  }
+
+  .signup-form input[type="text"],
+  .signup-form input[type="email"],
+  .signup-form input[type="password"] {
+    font-size: 14px;
+    padding: 14px 20px;
+  }
+
+  .signup-form button {
+    font-size: 16px;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-wrapper {
+    padding: 15px;
+  }
+
+  .signup-form {
+    padding: 30px 20px;
+  }
+
+  .signup-form h2 {
+    font-size: 24px;
+  }
+
+  .signup-form input[type="text"],
+  .signup-form input[type="email"],
+  .signup-form input[type="password"] {
+    font-size: 14px;
+    padding: 12px 18px;
+  }
+
+  .signup-form button {
+    font-size: 14px;
+    padding: 12px 18px;
+  }
+
+  .checkbox-label {
+    font-size: 13px;
+  }
+}

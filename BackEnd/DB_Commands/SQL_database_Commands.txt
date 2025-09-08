@@ -1,3 +1,6 @@
+
+Database Schema: 
+
 CREATE DATABASE cuserCredentialsDB; 
 
 CREATE TABLE users (

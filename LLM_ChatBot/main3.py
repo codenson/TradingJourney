@@ -72,6 +72,7 @@ CORS(app)
 @app.route("/AnalyseCSV", methods=['POST'])
 def generate_advice():
     json_data = request.get_json()
+    print("Request recieved ------")
     if not json_data:
         return jsonify({"error": "Request body must be JSON"}), 415
 
